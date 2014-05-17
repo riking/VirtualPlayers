@@ -121,6 +121,9 @@ public class PlayerExecutor extends VPBaseExecutor {
 
     @MCCommand(cmds = {"click", "interact"}, op = true, usage = "/dc <vp> click <left|right> <location>")
     public boolean interactEvent(CommandSender sender, VirtualPlayer vp, String lr, Location l) {
+        if (l.getWorld() == null) {
+            l.setWorld(vp.getLocation().getWorld());
+        }
         boolean left = lr.equalsIgnoreCase("left");
         Action action;
         if (l.getBlock().getType() == Material.AIR) {
@@ -162,6 +165,9 @@ public class PlayerExecutor extends VPBaseExecutor {
 
     @MCCommand(cmds = {"examine"}, op = true)
     public boolean examine(CommandSender sender, VirtualPlayer vp, Location l) {
+        if (l.getWorld() == null) {
+            l.setWorld(vp.getLocation().getWorld());
+        }
         Block b = l.getWorld().getBlockAt(l);
 
         sendMessage(sender, "&6" + vp.getName() + "&e examining location " + l + " &4" + b.getType());
@@ -177,6 +183,9 @@ public class PlayerExecutor extends VPBaseExecutor {
 
     @MCCommand(cmds = {"tp", "teleport"}, op = true)
     public boolean teleportPlayer(CommandSender sender, VirtualPlayer vp, Location l) {
+        if (l.getWorld() == null) {
+            l.setWorld(vp.getLocation().getWorld());
+        }
         PlayerTeleportEvent pte = new PlayerTeleportEvent(vp, vp.getLocation(),
                 l, TeleportCause.COMMAND);
         Bukkit.getPluginManager().callEvent(pte);
@@ -222,7 +231,9 @@ public class PlayerExecutor extends VPBaseExecutor {
 
     @MCCommand(cmds = {"bpe", "BlockPlaceEvent"}, op = true)
     public boolean blockPlaceEvent(CommandSender sender, VirtualPlayer vp, Material mat, Location loc) {
-
+        if (loc.getWorld() == null) {
+            loc.setWorld(vp.getLocation().getWorld());
+        }
         Block replaced = loc.getBlock();
         Material old = replaced.getType();
         replaced.setType(mat);
@@ -244,6 +255,9 @@ public class PlayerExecutor extends VPBaseExecutor {
 
     @MCCommand(cmds = {"bbe", "BlockBreakEvent"}, op = true)
     public boolean blockBreakEvent(CommandSender sender, VirtualPlayer vp, Location loc) {
+        if (loc.getWorld() == null) {
+            loc.setWorld(vp.getLocation().getWorld());
+        }
         Block replaced = loc.getBlock();
         Material old = replaced.getType();
         BlockBreakEvent bpe = new BlockBreakEvent(replaced, vp);

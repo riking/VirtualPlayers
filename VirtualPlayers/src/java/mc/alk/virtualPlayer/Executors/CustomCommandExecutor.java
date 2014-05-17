@@ -539,10 +539,9 @@ public class CustomCommandExecutor implements CommandExecutor {
         if (split.length > 4){yaw = Float.valueOf(split[4]);}
         if (split.length > 5){pitch = Float.valueOf(split[5]);}
         World world = null;
-        if (w != null){
-            world = Bukkit.getWorld(w);}
-        if (world ==null){
-            throw new IllegalArgumentException("Error parsing location, World '"+string+"' does not exist");}
+        if (w != null) {
+            world = Bukkit.getWorld(w);
+        }
         return new Location(world,x,y,z,yaw,pitch);
     }
 
